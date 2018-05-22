@@ -133,7 +133,7 @@ public class TaskActivity extends AppCompatActivity implements Dialog.Callbacks 
                     case R.id.menu_tasks:
                         break;
                     case R.id.menu_map:
-                        goToMapScreen();
+                        goToMapScreen(username);
                         break;
 
 
@@ -195,8 +195,10 @@ public class TaskActivity extends AppCompatActivity implements Dialog.Callbacks 
         finish();
     }
 
-    private void goToMapScreen() {
+    private void goToMapScreen(String username) {
         Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(Contract.ProfileActivity.USERNAME, username);
+        intent.putExtra(Contract.ProfileActivity.GROUPNAME, groupname);
         startActivity(intent);
         //  we no longer need the Login screen
         finish();

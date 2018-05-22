@@ -2,6 +2,7 @@ package shuba.shuba;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -10,9 +11,18 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -33,7 +43,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+import shuba.shuba.model.Contract;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, Dialog.Callbacks,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -44,11 +56,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
+    private Dialog mLogoutDialog;
+    private DrawerLayout mDrawerLayout;
+    String username;
+    String groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            username = intent.getStringExtra(Contract.ProfileActivity.USERNAME);
+            groupName = intent.getStringExtra(Contract.ProfileActivity.GROUPNAME);
+
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -57,6 +80,127 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        /* ------ some menu stuff -------------------------- */
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                TextView navigationViewHeader = findViewById(R.id.nav_header_text);
+
+                if (username != null) {
+                    navigationViewHeader.setText(username);
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+                TextView navigationViewHeader = findViewById(R.id.nav_header_text);
+
+                if (username != null) {
+                    navigationViewHeader.setText(username);
+                }
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                // do nothing
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                // do nothing
+            }
+        });
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        // click listener for navigation items
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.menu_logout:
+                        mLogoutDialog = Utils.ShowLogOutDialog(MapsActivity.this);
+                        break;
+                    case R.id.menu_group:
+                        goToGroupScreen(username);
+                        break;
+                    case R.id.menu_profile:
+                        goToProfileScreen();
+                        break;
+                    case R.id.menu_tasks:
+                        goToTaskScreen(groupName, username);
+                        break;
+                    case R.id.menu_map:
+                        break;
+
+
+
+                }
+                item.setChecked(true);
+
+                Toast.makeText(MapsActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+
+                // close the drawer when one item is selected
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDialogPositiveClick(Dialog dialog) {
+        //  identify which dialog was clicked
+        if (dialog == mLogoutDialog) {
+            // clean up the local database (if another user will be logging in, we don't want the
+            // previous user's info to be available for him)
+
+            // log the user out from the UI
+            Utils.LogOut(this);
+        }
+    }
+
+    @Override
+    public void onDialogNegativeClick(Dialog dialog) {
+        //  do nothing
+    }
+
+    private void goToProfileScreen() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(Contract.ProfileActivity.USERNAME, username);
+        startActivity(intent);
+        //  we no longer need the Login screen
+        finish();
+    }
+    private void goToTaskScreen(String groupname, String username) {
+        Intent intent = new Intent(this, TaskActivity.class);
+        intent.putExtra(Contract.ProfileActivity.GROUPNAME, groupname);
+        intent.putExtra(Contract.ProfileActivity.USERNAME, username);
+        startActivity(intent);
+        //  we no longer need the Login screen
+        finish();
+    }
+    private void goToGroupScreen(String username) {
+        Intent intent = new Intent(this, GroupActivity.class);
+        intent.putExtra(Contract.ProfileActivity.USERNAME, username);
+        startActivity(intent);
+        //  we no longer need the Login screen
+        finish();
     }
 
 

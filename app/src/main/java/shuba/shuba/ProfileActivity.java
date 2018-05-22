@@ -129,7 +129,7 @@ public class ProfileActivity extends AppCompatActivity implements Dialog.Callbac
                         goToTaskScreen(mGroupName.getText().toString(), mUsername.getText().toString());
                         break;
                     case R.id.menu_map:
-                        goToMapScreen();
+                        goToMapScreen(mGroupName.getText().toString(), mUsername.getText().toString());
                         break;
 
                 }
@@ -193,8 +193,10 @@ public class ProfileActivity extends AppCompatActivity implements Dialog.Callbac
         finish();
     }
 
-    private void goToMapScreen() {
+    private void goToMapScreen(String groupname, String username) {
         Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(Contract.ProfileActivity.GROUPNAME, groupname);
+        intent.putExtra(Contract.ProfileActivity.USERNAME, username);
         startActivity(intent);
         //  we no longer need the Login screen
         finish();

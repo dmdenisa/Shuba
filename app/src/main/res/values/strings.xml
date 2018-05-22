@@ -4,9 +4,9 @@
     <!-- Strings related to login -->
     <string name="login">Log In</string>
     <string name="register">Register</string>
-    <string name="points">points</string>
-    <string name="level">level</string>
-    <string name="status">status</string>
+    <string name="points">Points</string>
+    <string name="level">Level</string>
+    <string name="status">Status</string>
     <string name="tasks">Tasks</string>
     <string name="members">Members</string>
     <string name="create_account"> Submit </string>
@@ -37,12 +37,15 @@
     <string name="email">"Email:"</string>
 
 
+
     <string name="name_text">"Mock"</string>
     <string name="username_text">"mock_account"</string>
     <string name="email_text">"Email"</string>
     <string name="level_text">"X"</string>
     <string name="status_text">"X"</string>
     <string name="points_text">"X"</string>
+
+
 
 
     <!-- Strings related to logout -->
@@ -54,6 +57,8 @@
     <!-- Strings related to loaders -->
 
     <string name="loader_profile">Profile Loader</string>
+
+
     <string name="title_activity_maps">Map</string>
 
 
