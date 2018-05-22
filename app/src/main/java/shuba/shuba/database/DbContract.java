@@ -53,6 +53,6 @@ public interface DbContract {
         String DESCRIPTION      = "description";
         String STATE            = "state";
         String NUMBER           = "number";
-        String GROUP            = "group";
+        String GROUP            = "groupName";
     }
 }

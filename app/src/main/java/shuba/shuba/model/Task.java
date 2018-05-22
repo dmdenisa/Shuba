@@ -15,6 +15,13 @@ public class Task {
         this.state = state;
         this.number = number;
     }
+    public Task(String name, String description, boolean state, int number){
+        this.name = name;
+        this.description = description;
+        this.groupName = groupName;
+        this.state = state;
+        this.number = number;
+    }
 
     public String getName() {
         return name;

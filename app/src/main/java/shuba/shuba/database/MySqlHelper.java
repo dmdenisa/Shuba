@@ -6,8 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
 import java.util.ArrayList;
 
@@ -31,6 +34,27 @@ public class MySqlHelper extends SQLiteOpenHelper {
     public MySqlHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
+
+    Task[] tasks = {new Task("Know each other!",
+            "Get to know your new friends. After you checked all the other members, mark this task as done!",
+            false, 5),
+            new Task("Check the map!",
+                    "Mark this task as done after you checked out your location!",
+                    false, 5),
+            new Task("Upload picture!",
+                    "Upload a picture as your profile picture! Mark this task done after you changed the picture",
+                    false, 5
+            ),
+            new Task("Meet up!",
+                    "Meet with the other members of the group! One of you mark the task as done. (Do not forget to have your location on)",
+                    false, 5),
+            new Task("Visit the Old Town of Bucharest!",
+                    "You have one week to visit the Old City Centre of Bucharest. " +
+                            "Mark this task done when you are located in the Old Town (make sure your location is on)." +
+                            "You could go there as a group or individually. ",
+                    false, 5)
+    };
+    static int indexTask = 0;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -62,8 +86,8 @@ public class MySqlHelper extends SQLiteOpenHelper {
                 + DbContract.Task.NAME + " TEXT, "
                 + DbContract.Task.DESCRIPTION + " TEXT, "
                 + DbContract.Task.STATE + " BOOLEAN, "
-                + DbContract.Task.NUMBER + "INTEGER, "
-                + DbContract.Task.GROUP + "TEXT "
+                + DbContract.Task.NUMBER + " INTEGER, "
+                + DbContract.Task.GROUP + " TEXT "
                 + ")");
 
         // Notice how the GitHub IDs have a UNIQUE clause which leads to aborting on conflict. This
@@ -103,7 +127,59 @@ public class MySqlHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         return db.rawQuery("SELECT * FROM " + DbContract.User.TABLE
-                + " where username=?", new String[]{username});
+                + " where "+DbContract.User.USERNAME + "=?", new String[]{username});
+    }
+
+    public boolean uploadPicture(String username, Bitmap img){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery("select * from " + DbContract.User.TABLE
+                + " where " + DbContract.User.USERNAME + "=?", new String[]{username});
+
+        if (res.moveToFirst()){
+            ContentValues values = new ContentValues();
+
+            values.put(DbContract.User.NAME, res.getString(res.getColumnIndex(DbContract.User.NAME)));
+            values.put(DbContract.User.USERNAME, username);
+            values.put(DbContract.User.PASSWORD,res.getString(res.getColumnIndex(DbContract.User.PASSWORD)));
+            values.put(DbContract.User.EMAIL, res.getString(res.getColumnIndex(DbContract.User.EMAIL)));
+            values.put(DbContract.User.GROUP_NAME, res.getString(res.getColumnIndex(DbContract.User.GROUP_NAME)));
+            values.put(DbContract.User.LEVEL, res.getString(res.getColumnIndex(DbContract.User.LEVEL)));
+            values.put(DbContract.User.PICTURE, getBitmapAsByteArray(img));
+
+            long ret = db.update(DbContract.User.TABLE, values, DbContract.User.USERNAME + "=?", new String[]{username});
+
+            if (ret < 0)
+                return false;
+            else
+                return true;
+
+        } else
+            return false;
+    }
+
+    public Bitmap getPicture(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery("select * from " + DbContract.User.TABLE
+                + " where " + DbContract.User.USERNAME + "=?", new String[]{username});
+
+        if (res.moveToFirst()){
+            byte[] imgByte = res.getBlob(res.getColumnIndex(DbContract.User.PICTURE));
+            res.close();
+            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+        }
+        if (res != null && !res.isClosed()) {
+            res.close();
+        }
+
+        return null ;
+    }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 
     public ArrayList<String> getAllUsers() {
@@ -131,6 +207,20 @@ public class MySqlHelper extends SQLiteOpenHelper {
         values.put(DbContract.Group.NOMEMBERS, 0);
 
         long ret = db.insert(DbContract.Group.TABLE, null, values);
+
+        for (int i = 0 ; i < 3; i++) {
+            values = new ContentValues();
+
+            values.put(DbContract.Task.NAME, tasks[indexTask].getName());
+            values.put(DbContract.Task.DESCRIPTION, tasks[indexTask].getDescription());
+            values.put(DbContract.Task.STATE, tasks[indexTask].getState());
+            values.put(DbContract.Task.NUMBER, tasks[indexTask].getNumber());
+            values.put(DbContract.Task.GROUP, name);
+
+            db.insert(DbContract.Task.TABLE, null, values);
+            indexTask = (indexTask + 1) % tasks.length;
+        }
+
 
         if (ret < 0)
             return false;
@@ -245,8 +335,7 @@ public class MySqlHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor res = db.rawQuery("select * from " + DbContract.Task.TABLE + " where " +
-                        DbContract.Task.NAME + "=?",
-                new String[]{taskName});
+                DbContract.Task.NAME + "=?", new String[]{taskName});
 
         if (res.moveToFirst()){
             if (res.getInt(res.getColumnIndex(DbContract.Task.NUMBER)) <= 0)
@@ -294,10 +383,11 @@ public class MySqlHelper extends SQLiteOpenHelper {
 
     public ArrayList<Task> getAllTasksInGroup(String groupName) {
         ArrayList<Task> array_list = new ArrayList<Task>();
-
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from " + DbContract.Task.TABLE + " where "
-                + DbContract.Task.GROUP + "=?", new String[]{groupName} );
+
+        Cursor res = db.rawQuery("select * from " + DbContract.Task.TABLE + " where " +
+                DbContract.Task.NAME + "=?", new String[]{groupName});
+
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
@@ -316,5 +406,13 @@ public class MySqlHelper extends SQLiteOpenHelper {
             res.moveToNext();
         }
         return array_list;
+    }
+
+    public int noUsers(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery("select * from " + DbContract.User.TABLE, null);
+
+        return res.getCount();
     }
 }

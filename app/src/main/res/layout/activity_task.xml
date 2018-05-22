@@ -15,10 +15,20 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
+        <TextView
+            android:id="@+id/profile_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#c62929"
+            android:padding="10dp"
+            android:text="Tasks"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
+            android:background="@drawable/background_box"
             android:id="@+id/recycler_view">
         </android.support.v7.widget.RecyclerView>
 

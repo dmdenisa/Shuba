@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/cv"
     card_view:cardCornerRadius="@dimen/cardview_default_radius"
-    card_view:cardElevation="@dimen/cardview_default_elevation"
-    >
+    card_view:cardElevation="@dimen/cardview_default_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"

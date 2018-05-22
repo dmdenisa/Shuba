@@ -23,8 +23,6 @@
 
     <uses-permission android:name="shuba.permission.MAPS_RECEIVE" />
 
-
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -52,6 +50,7 @@
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".GroupActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".TaskActivity" />
 
         <provider
             android:name=".database.MyContentProvider"
@@ -72,7 +71,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
     </application>
 
 </manifest>

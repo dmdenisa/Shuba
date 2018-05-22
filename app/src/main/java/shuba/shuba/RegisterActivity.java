@@ -2,6 +2,12 @@ package shuba.shuba;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,7 +59,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //  we no longer need the Login screen
         finish();
     }
-
+    String[] names= {"2 Slow 2 Win 2 Dumb 2 Quit", "We Talk A Lot", "Attack of the Invisible Ninja",
+            "Goal Diggers", "Shooting Stars", "The Brain Trust", "Overconfident", "Larisa",
+            "No one said it would be easy","Dragons", "Friends"};
+    static int indexGroupName = 0;
     @Override
     public void onClick(View v) {
         if (mName.getText().length() == 0 || mUsername.getText().length() == 0
@@ -75,9 +84,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (!cursor.moveToFirst()){
                 /* Create new group! */
                 Log.d(TAG, "!!!!!!!!&&&&&!!!!!!");
-                int randomNum = ThreadLocalRandom.current().nextInt(0, 200 + 1);
-                boolean added = db.addGroup(Integer.toString(randomNum), "new group", mUsername.getText().toString(), 5);
-
+                boolean added = db.addGroup(names[indexGroupName], "new group", mUsername.getText().toString(), 5);
+                indexGroupName = (indexGroupName+1)%names.length;
                 if (added == false)
                     Log.d(TAG, "No group found!");
 
@@ -106,6 +114,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 db.updateGroupMembers(cursor.getString(cursor.getColumnIndex(DbContract.Group.NAME)));
                 goToLoginScreen();
             }
+            Drawable drawable =  getResources().getDrawable(R.drawable.img);
+            Bitmap bitmap;
+            if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+                bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+            } else {
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            }
+
+            db.uploadPicture(mUsername.getText().toString(), bitmap);
         }
 
         else {
