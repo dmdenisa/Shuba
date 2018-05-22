@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/background_box">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="325dp"
+        android:layout_height="240dp"
+        android:src="@drawable/shubba" />
+
+    <LinearLayout
+        android:id="@+id/mainm_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/mainm_points_btn"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/button_top"
+            android:text="@string/points"
+            android:background="@drawable/box"/>
+
+        <Button
+            android:id="@+id/mainm_level_btn"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/button_top"
+            android:text="@string/level"
+            android:background="@drawable/box"
+            />
+
+        <Button
+            android:id="@+id/mainm_status_btn"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/button_top"
+            android:text="@string/status"
+            android:background="@drawable/box"
+            />
+
+    </LinearLayout>
+</LinearLayout>

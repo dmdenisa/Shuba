@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout android:id="@+id/drawer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_box">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+
+        <TextView
+            android:id="@+id/profile_group_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="GROUP NAME"
+            android:textSize="15sp"
+
+            />
+
+        <LinearLayout
+            android:id="@+id/members_member_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="100dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:elevation="12dp"
+                    android:id="@+id/view2"
+                    app:cardCornerRadius="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9">
+                    <ImageView
+                        android:layout_height="80dp"
+                        android:layout_width="match_parent"
+                        android:id="@+id/profile_picture"
+                        android:src="@drawable/shubba"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true">
+                    </ImageView>
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/profile_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="25dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="@string/username_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_level"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:text="@string/level_text" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:gravity="center"
+                        android:text="@string/level" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+
+                        android:gravity="center"
+                        android:text="@string/status_text" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:gravity="center"
+                        android:text="@string/status" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_points"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/points_text" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:gravity="center"
+                        android:text="@string/points" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="24dp"
+                        android:gravity="center"
+                        android:text="@string/name" />
+
+                    <TextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="24dp"
+                        android:text="@string/name_text" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="24dp"
+                        android:gravity="center"
+                        android:text="@string/email" />
+
+                    <TextView
+                        android:id="@+id/profile_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="24dp"
+                        android:text="@string/email_text" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/navigation_drawer_menu"
+        app:headerLayout="@layout/nav_header" />
+</android.support.v4.widget.DrawerLayout>

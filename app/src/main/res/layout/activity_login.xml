@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/container"
+    android:background="@drawable/background_box" >
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/linear_box"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/login_user_text"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+
+            android:focusable="true"
+            android:hint="@string/prompt_username"
+            android:textColorHighlight="#ff7eff15"
+            android:textColorHint="@color/hint" />
+
+        <EditText
+            android:id="@+id/login_password_text"
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/hint" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/login_register_btn"
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/button_top"
+            android:background="@drawable/box"
+            android:text="@string/register" />
+
+        <Button
+            android:id="@+id/login_log_btn"
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/button_top"
+            android:background="@drawable/box"
+            android:text="@string/login"
+            android:textColor="@color/btn_text"
+            />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Shuba</string>
+
+    <!-- Strings related to login -->
+    <string name="login">Log In</string>
+    <string name="register">Register</string>
+    <string name="points">points</string>
+    <string name="level">level</string>
+    <string name="status">status</string>
+    <string name="tasks">Tasks</string>
+    <string name="members">Members</string>
+    <string name="create_account"> Submit </string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_name">Name</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Confirm password</string>
+    <string name="incorrect_confirm_passowrd_toast">Passwords do not match!</string>
+    <string name="cursor_toast">Oops database problem!</string>
+    <string name="short_password_toast">The introduced password is too short!</string>
+    <string name="empty_fields_toast">Complete all fields!</string>
+    <string name="existing_username_toast">This user already exists!</string>
+    <string name="inexistent_user_toast">This user does not exist!</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!-- Strings related to profile view -->
+    <string name="username">"username:"</string>
+    <string name="name">"Name:"</string>
+    <string name="email">"Email:"</string>
+
+
+    <string name="name_text">"Mock"</string>
+    <string name="username_text">"mock_account"</string>
+    <string name="email_text">"Email"</string>
+    <string name="level_text">"X"</string>
+    <string name="status_text">"X"</string>
+    <string name="points_text">"X"</string>
+
+
+    <!-- Strings related to logout -->
+    <string name="logout">Log Out</string>
+    <string name="message_logout">Are you sure you want to logout?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Strings related to loaders -->
+
+    <string name="loader_profile">Profile Loader</string>
+    <string name="title_activity_maps">Map</string>
+
+
+    <string name="default_info_title">Default Location</string>
+    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
+    <string name="option_get_place">Get place</string>
+    <string name="pick_place">Choose a place</string>
+
+
+</resources>
